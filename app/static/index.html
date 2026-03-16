@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPS Two-Hop Transmission Scheduling Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+      :root {
+        --bg-a: #0f172a;
+        --bg-b: #1e293b;
+        --accent-a: #06b6d4;
+        --accent-b: #f59e0b;
+        --accent-c: #ef4444;
+        --card: rgba(255, 255, 255, 0.08);
+        --card-border: rgba(255, 255, 255, 0.15);
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.2), transparent 40%),
+          radial-gradient(circle at 90% 20%, rgba(245, 158, 11, 0.22), transparent 45%),
+          linear-gradient(130deg, var(--bg-a), var(--bg-b));
+        min-height: 100vh;
+      }
+
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(8px);
+      }
+
+      .rise {
+        animation: rise 0.6s ease;
+      }
+
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .pulse-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        animation: pulse 1.2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(0.95); opacity: 0.8; }
+        70% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.8; }
+      }
+    </style>
+  </head>
+  <body class="text-slate-100 p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-6">
+      <header class="rise">
+        <h1 class="text-2xl md:text-4xl font-black tracking-tight">Transmission Scheduling for CPS Two-Hop Networks</h1>
+        <p class="text-cyan-200 mt-2">Remote state estimation with adaptive scheduling under DoS attacks</p>
+      </header>
+
+      <section class="grid grid-cols-1 md:grid-cols-5 gap-4 rise">
+        <div class="glass rounded-2xl p-4 md:col-span-2">
+          <h2 class="font-bold text-lg">Simulation Control</h2>
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <button id="startBtn" class="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold py-2 rounded-xl transition">Start</button>
+            <button id="stopBtn" class="bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 rounded-xl transition">Stop</button>
+          </div>
+          <div class="mt-4 text-sm space-y-1">
+            <div class="flex items-center gap-2"><span class="pulse-dot bg-emerald-400"></span><span>Status: <span id="simStatus">Idle</span></span></div>
+            <div>Step: <span id="stepVal">0</span></div>
+            <div>DoS Detected: <span id="dosFlag" class="font-semibold">No</span></div>
+          </div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+          <p class="text-xs uppercase text-cyan-200">Delivery Ratio</p>
+          <p id="pdrVal" class="text-3xl font-extrabold">0%</p>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <p class="text-xs uppercase text-cyan-200">Packet Loss</p>
+          <p id="lossVal" class="text-3xl font-extrabold">0%</p>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <p class="text-xs uppercase text-cyan-200">Throughput</p>
+          <p id="throughputVal" class="text-3xl font-extrabold">0</p>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 rise">
+        <div class="glass rounded-2xl p-4">
+          <h3 class="font-bold mb-2">Estimation Error by Sensor</h3>
+          <canvas id="errorChart" height="140"></canvas>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <h3 class="font-bold mb-2">Network Metrics Timeline</h3>
+          <canvas id="metricsChart" height="140"></canvas>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 rise">
+        <div class="glass rounded-2xl p-4">
+          <h3 class="font-bold mb-2">Active Attacks</h3>
+          <ul id="attackList" class="text-sm space-y-2"></ul>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <h3 class="font-bold mb-2">Recent Logs</h3>
+          <div id="logBox" class="text-xs max-h-56 overflow-auto space-y-1"></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+  </body>
+</html>
