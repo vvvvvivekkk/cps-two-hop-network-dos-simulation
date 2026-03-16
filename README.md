@@ -74,3 +74,6 @@ The estimator runs a Kalman filter while an adaptive transmission scheduler sele
 - Relay buffer default capacity is 50 packets.
 - Scheduler selects the sensor with highest adaptive weighted estimation error.
 - Attack profiles can be sent in /start_simulation request body.
+
+<img width="1238" height="819" alt="image" src="https://github.com/user-attachments/assets/476db276-4acb-4fe8-8b7d-e7ec6495f2ca" />
+
